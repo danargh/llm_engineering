@@ -131,7 +131,9 @@ def _cpu_block():
     elif sysname == "Darwin":
         brand = _run(["sysctl", "-n", "machdep.cpu.brand_string"])
     elif sysname == "Windows":
-        brand = _run('powershell -NoProfile -Command "(Get-CimInstance Win32_Processor).Name"')
+        brand = _run(
+            'powershell -NoProfile -Command "(Get-CimInstance Win32_Processor).Name"'
+        )
         if not brand:
             brand = _run("wmic cpu get Name /value").replace("Name=", "").strip()
 
@@ -142,7 +144,9 @@ def _cpu_block():
         cores_physical = int(_run(["sysctl", "-n", "hw.physicalcpu"]) or "0")
     elif sysname == "Windows":
         cores_physical = int(
-            _run('powershell -NoProfile -Command "(Get-CimInstance Win32_Processor).NumberOfCores"')
+            _run(
+                'powershell -NoProfile -Command "(Get-CimInstance Win32_Processor).NumberOfCores"'
+            )
             or "0"
         )
     elif sysname == "Linux":
@@ -254,7 +258,13 @@ def rust_toolchain_info():
     """
     info = {
         "installed": False,
-        "rustc": {"path": "", "version": "", "host_triple": "", "release": "", "commit_hash": ""},
+        "rustc": {
+            "path": "",
+            "version": "",
+            "host_triple": "",
+            "release": "",
+            "commit_hash": "",
+        },
         "cargo": {"path": "", "version": ""},
         "rustup": {
             "path": "",
@@ -354,6 +364,8 @@ def rust_toolchain_info():
         return candidate if candidate and os.path.isdir(candidate) else ""
 
     info["env"]["CARGO_HOME"] = _maybe_default_home(info["env"]["CARGO_HOME"], ".cargo")
-    info["env"]["RUSTUP_HOME"] = _maybe_default_home(info["env"]["RUSTUP_HOME"], ".rustup")
+    info["env"]["RUSTUP_HOME"] = _maybe_default_home(
+        info["env"]["RUSTUP_HOME"], ".rustup"
+    )
 
     return info
