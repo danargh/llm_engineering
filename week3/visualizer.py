@@ -9,8 +9,13 @@ load_dotenv(override=True)
 
 
 class TokenPredictor:
-    def __init__(self, model_name: str):
-        self.client = OpenAI()
+    def __init__(self, model_name: str, base_url: str = None, api_key: str = None):
+        kwargs = {}
+        if base_url:
+            kwargs["base_url"] = base_url
+        if api_key:
+            kwargs["api_key"] = api_key
+        self.client = OpenAI(**kwargs)
         self.messages = []
         self.predictions = []
         self.model_name = model_name
@@ -92,7 +97,11 @@ def create_token_graph(model_name: str, predictions: List[Dict]) -> nx.DiGraph:
         for j, (alt_token, alt_prob) in enumerate(pred["alternatives"]):
             alt_id = f"t{i}_alt{j}"
             G.add_node(
-                alt_id, token=alt_token, prob=f"{alt_prob * 100:.1f}%", color="lightgray", size=6000
+                alt_id,
+                token=alt_token,
+                prob=f"{alt_prob * 100:.1f}%",
+                color="lightgray",
+                size=6000,
             )
 
             # Add edge from main token to its alternatives only
@@ -137,10 +146,14 @@ def visualize_predictions(G: nx.DiGraph, figsize=(14, 80)):
     nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=node_sizes)
 
     # Draw all edges as straight lines
-    nx.draw_networkx_edges(G, pos, edge_color="gray", arrows=True, arrowsize=20, alpha=0.7)
+    nx.draw_networkx_edges(
+        G, pos, edge_color="gray", arrows=True, arrowsize=20, alpha=0.7
+    )
 
     # Add labels with token and probability
-    labels = {node: f"{G.nodes[node]['token']}\n{G.nodes[node]['prob']}" for node in G.nodes()}
+    labels = {
+        node: f"{G.nodes[node]['token']}\n{G.nodes[node]['prob']}" for node in G.nodes()
+    }
     nx.draw_networkx_labels(G, pos, labels, font_size=14)
 
     plt.title("Token prediction.")

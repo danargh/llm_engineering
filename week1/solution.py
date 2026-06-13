@@ -6,7 +6,7 @@ from openai import OpenAI
 from scraper import fetch_website_contents
 
 OLLAMA_BASE_URL = "http://localhost:11434/v1"
-MODEL = "llama3.2"
+MODEL = "gemma4:e2b-it-qat"
 
 system_prompt = """
 You are a snarky assistant that analyzes the contents of a website,
@@ -26,17 +26,16 @@ def messages_for(website):
     """Create message list for the LLM."""
     return [
         {"role": "system", "content": system_prompt},
-        {"role": "user", "content": user_prompt_prefix + website}
+        {"role": "user", "content": user_prompt_prefix + website},
     ]
 
 
 def summarize(url):
     """Fetch and summarize a website using Ollama."""
-    ollama = OpenAI(base_url=OLLAMA_BASE_URL, api_key='ollama')
+    ollama = OpenAI(base_url=OLLAMA_BASE_URL, api_key="ollama")
     website = fetch_website_contents(url)
     response = ollama.chat.completions.create(
-        model=MODEL,
-        messages=messages_for(website)
+        model=MODEL, messages=messages_for(website)
     )
     return response.choices[0].message.content
 
