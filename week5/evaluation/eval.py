@@ -1,16 +1,19 @@
 import sys
 import math
+from pathlib import Path
 from pydantic import BaseModel, Field
 from litellm import completion
 from dotenv import load_dotenv
+import os
 
-from evaluation.test import TestQuestion, load_tests
-from implementation.answer import answer_question, fetch_context
+
+from week5.evaluation.test import TestQuestion, load_tests
+from week5.implementation.answer import answer_question, fetch_context
 
 
 load_dotenv(override=True)
 
-MODEL = "gpt-4.1-nano"
+MODEL = "MiniMax-M2.7-highspeed"
 db_name = "vector_db"
 
 
@@ -153,7 +156,9 @@ Provide detailed feedback and scores from 1 (very poor) to 5 (ideal) for each di
     ]
 
     # Call LLM judge with structured outputs (async)
-    judge_response = completion(model=MODEL, messages=judge_messages, response_format=AnswerEval)
+    judge_response = completion(model=MODEL,
+    api_base="https://ai.sumopod.com",
+    api_key=os.getenv("SUMOPOD_API_KEY"), messages=judge_messages, response_format=AnswerEval)
 
     answer_eval = AnswerEval.model_validate_json(judge_response.choices[0].message.content)
 

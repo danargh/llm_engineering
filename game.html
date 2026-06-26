@@ -1,0 +1,1105 @@
+<!doctype html>
+<html lang="id">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+      <title>Project: Cuan Negara</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      <script>
+         tailwind.config = { theme: { extend: { fontFamily: { display: ["Space Grotesk", "sans-serif"], mono: ["JetBrains Mono", "monospace"] } } } };
+      </script>
+      <style>
+         * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+         }
+         body {
+            font-family: "Space Grotesk", sans-serif;
+            background: #f0ede6;
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+         }
+         body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(circle, #b8b4a8 0.5px, transparent 0.5px);
+            background-size: 14px 14px;
+            opacity: 0.12;
+            pointer-events: none;
+         }
+         body::after {
+            content: "";
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: linear-gradient(to top, rgba(180, 175, 160, 0.08), transparent);
+            pointer-events: none;
+         }
+         .mono {
+            font-family: "JetBrains Mono", monospace;
+         }
+         @keyframes shake {
+            0%,
+            100% {
+               transform: translateX(0) rotate(0);
+            }
+            10% {
+               transform: translateX(-4px) rotate(-0.5deg);
+            }
+            30% {
+               transform: translateX(3px) rotate(0.4deg);
+            }
+            50% {
+               transform: translateX(-3px) rotate(-0.3deg);
+            }
+            70% {
+               transform: translateX(2px) rotate(0.2deg);
+            }
+            90% {
+               transform: translateX(-1px);
+            }
+         }
+         .shake-it {
+            animation: shake 0.5s ease-in-out infinite;
+         }
+         @keyframes pulse-ring {
+            0% {
+               box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+            }
+            70% {
+               box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
+            }
+            100% {
+               box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+         }
+         .pulse-ring {
+            animation: pulse-ring 1.2s ease-out infinite;
+         }
+         @keyframes siren-glow {
+            0%,
+            100% {
+               opacity: 1;
+               filter: drop-shadow(0 0 4px #ef4444);
+            }
+            50% {
+               opacity: 0.2;
+               filter: drop-shadow(0 0 0 #ef4444);
+            }
+         }
+         .siren-glow {
+            animation: siren-glow 0.45s ease-in-out infinite;
+         }
+         @keyframes float-away {
+            0% {
+               opacity: 1;
+               transform: translateY(0) scale(1);
+            }
+            100% {
+               opacity: 0;
+               transform: translateY(-36px) scale(0.7);
+            }
+         }
+         .float-away {
+            animation: float-away 1.4s ease-out forwards;
+         }
+         @keyframes pop-in {
+            0% {
+               transform: scale(0.85);
+               opacity: 0;
+            }
+            100% {
+               transform: scale(1);
+               opacity: 1;
+            }
+         }
+         .pop-in {
+            animation: pop-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+         }
+         @keyframes slide-up {
+            0% {
+               transform: translateY(40px);
+               opacity: 0;
+            }
+            100% {
+               transform: translateY(0);
+               opacity: 1;
+            }
+         }
+         .slide-up {
+            animation: slide-up 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+         }
+         @keyframes toast-in {
+            0% {
+               transform: translateX(-50%) translateY(-16px) scale(0.9);
+               opacity: 0;
+            }
+            100% {
+               transform: translateX(-50%) translateY(0) scale(1);
+               opacity: 1;
+            }
+         }
+         @keyframes toast-out {
+            0% {
+               opacity: 1;
+            }
+            100% {
+               transform: translateX(-50%) translateY(-12px);
+               opacity: 0;
+            }
+         }
+         .toast-in {
+            animation: toast-in 0.25s ease-out forwards;
+         }
+         .toast-out {
+            animation: toast-out 0.25s ease-in forwards;
+         }
+         @keyframes crack-anim {
+            0%,
+            100% {
+               opacity: 0.5;
+            }
+            50% {
+               opacity: 1;
+            }
+         }
+         .crack-anim {
+            animation: crack-anim 0.8s ease-in-out infinite;
+         }
+         @keyframes prisoner-sway {
+            0%,
+            100% {
+               transform: rotate(-2deg);
+            }
+            50% {
+               transform: rotate(2deg);
+            }
+         }
+         .prisoner-sway {
+            animation: prisoner-sway 2s ease-in-out infinite;
+         }
+         input[type="range"].ks {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 20px;
+            border-radius: 10px;
+            outline: none;
+            cursor: pointer;
+            background: linear-gradient(90deg, #16a34a 0%, #22c55e 10%, #84cc16 22%, #eab308 38%, #f59e0b 50%, #f97316 62%, #ef4444 78%, #dc2626 90%, #991b1b 100%);
+         }
+         input[type="range"].ks::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #fff, #e5e5e5);
+            border: 3px solid #1a1a1a;
+            cursor: grab;
+            box-shadow:
+               0 2px 8px rgba(0, 0, 0, 0.3),
+               inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            transition: transform 0.08s;
+         }
+         input[type="range"].ks::-webkit-slider-thumb:active {
+            cursor: grabbing;
+            transform: scale(1.2);
+         }
+         input[type="range"].ks::-moz-range-thumb {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #fff, #e5e5e5);
+            border: 3px solid #1a1a1a;
+            cursor: grab;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+         }
+         .scroll-y::-webkit-scrollbar {
+            width: 3px;
+         }
+         .scroll-y::-webkit-scrollbar-track {
+            background: transparent;
+         }
+         .scroll-y::-webkit-scrollbar-thumb {
+            background: #c5c0b4;
+            border-radius: 2px;
+         }
+         .btn-up {
+            transition: all 0.1s;
+         }
+         .btn-up:active:not(:disabled) {
+            transform: scale(0.96);
+         }
+         .tab-btn {
+            transition: all 0.15s;
+         }
+         @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+               animation-duration: 0.01ms !important;
+               animation-iteration-count: 1 !important;
+               transition-duration: 0.01ms !important;
+            }
+         }
+      </style>
+   </head>
+   <body>
+      <div id="app" class="max-w-md w-full h-dvh flex flex-col relative overflow-hidden" style="background: #f0ede6; box-shadow: 0 0 80px rgba(0, 0, 0, 0.07)">
+         <!-- Title Bar -->
+         <header class="flex-none px-4 pt-3 pb-1">
+            <div class="flex items-center justify-between">
+               <div>
+                  <h1 class="text-[15px] font-extrabold text-gray-900 tracking-tight leading-none">PROJECT: CUAN NEGARA</h1>
+                  <p class="text-[9px] text-gray-400 font-semibold tracking-widest mt-0.5">SIMULASI KORUPSI SATIRIK</p>
+               </div>
+               <div id="prest-badge" class="hidden items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-extrabold" style="background: linear-gradient(135deg, #7c3aed, #a855f7); color: #fff"></div>
+            </div>
+         </header>
+
+         <!-- Status Bar -->
+         <div id="status-bar" class="flex-none px-3 py-2" style="border-radius: 0 0 16px 16px; transition: background 0.3s">
+            <div class="flex items-start gap-2">
+               <!-- Uang Kotor -->
+               <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-1 mb-0.5">
+                     <div class="w-5 h-5 rounded-md flex items-center justify-center" style="background: #4a5a2f"></div>
+                     <span class="text-[9px] font-bold tracking-wider uppercase" style="color: #4a5a2f">Uang Kotor</span>
+                  </div>
+                  <div id="dirty-val" class="mono font-extrabold text-[15px] truncate" style="color: #3d4c28">Rp 0</div>
+                  <div id="dirty-rate" class="mono text-[10px] font-semibold" style="color: #6b7a4a"></div>
+               </div>
+               <!-- Gauge -->
+               <div class="flex-shrink-0" style="width: 160px; margin: 0 auto; position: relative">
+                  <svg id="gauge-svg" viewBox="0 0 140 80" class="w-full">
+                     <path d="M 20 62 A 50 50 0 1 1 120 62" fill="none" stroke="#e5e2da" stroke-width="10" stroke-linecap="round" />
+                     <path id="gauge-arc" d="" fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round" style="transition: stroke 0.3s" />
+                     <text id="gauge-pct" x="70" y="54" text-anchor="middle" class="mono" style="font-size: 22px; font-weight: 800; fill: #22c55e; transition: fill 0.3s">0%</text>
+                     <text x="70" y="68" text-anchor="middle" style="font-size: 5.5px; font-weight: 800; letter-spacing: 0.1em; fill: #888">HEAT METER</text>
+                     <text x="70" y="76" text-anchor="middle" style="font-size: 4.5px; font-weight: 600; letter-spacing: 0.06em; fill: #aaa">RISIKO TERTANGKAP</text>
+                  </svg>
+                  <div id="gauge-siren" class="absolute -top-2 left-1/2 -translate-x-1/2 hidden"></div>
+               </div>
+               <!-- Uang Bersih -->
+               <div class="flex-1 min-w-0 text-right">
+                  <div class="flex items-center justify-end gap-1 mb-0.5">
+                     <span class="text-[9px] font-bold tracking-wider uppercase" style="color: #92400e">Uang Bersih</span>
+                     <div class="w-5 h-5 rounded-md flex items-center justify-center" style="background: linear-gradient(135deg, #d97706, #f59e0b)"></div>
+                  </div>
+                  <div id="clean-val" class="mono font-extrabold text-[15px] truncate" style="color: #92400e">Rp 1.0M</div>
+                  <div id="clean-rate" class="mono text-[10px] font-semibold text-emerald-600"></div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Workspace -->
+         <main id="workspace" class="flex-1 overflow-y-auto scroll-y px-3 pb-2">
+            <!-- Project Card -->
+            <section id="proj-card" class="rounded-2xl p-4 mb-3 relative overflow-hidden" style="background: rgba(255, 255, 255, 0.72); backdrop-filter: blur(8px); border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04)">
+               <div class="flex items-center gap-2 mb-2">
+                  <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #374151, #4b5563)"></div>
+                  <div class="flex-1">
+                     <div class="text-[13px] font-extrabold text-gray-900 tracking-tight">MEGA PROYEK JALAN TOL</div>
+                     <div class="text-[10px] text-gray-500 font-medium">
+                        Level
+                        <span id="proj-lvl-badge" class="mono font-bold text-gray-700">1</span><span id="prest-info" class="text-purple-600 font-bold"></span>
+                     </div>
+                  </div>
+               </div>
+               <div id="bridge-wrap"></div>
+               <div class="grid grid-cols-2 gap-2 mt-3 mb-1">
+                  <div class="rounded-xl px-3 py-2" style="background: rgba(74, 90, 47, 0.08)">
+                     <div class="text-[8px] font-bold uppercase tracking-wider" style="color: rgba(74, 90, 47, 0.5)">Pendapatan Kotor /dtk</div>
+                     <div id="inc-val" class="mono font-extrabold text-base" style="color: #3d4c28">+0</div>
+                  </div>
+                  <div id="dh-box" class="rounded-xl px-3 py-2" style="background: rgba(22, 163, 74, 0.06)">
+                     <div id="dh-label" class="text-[8px] font-bold uppercase tracking-wider" style="color: rgba(22, 163, 74, 0.45)">Perubahan Heat /dtk</div>
+                     <div id="dh-val" class="mono font-extrabold text-base" style="color: #16a34a">+0.00</div>
+                  </div>
+               </div>
+               <div id="float-wrap" class="relative h-6 overflow-hidden"></div>
+               <div class="mt-2">
+                  <div class="flex justify-between items-center mb-1">
+                     <span class="text-[9px] font-extrabold text-emerald-600 tracking-wide">0% AMAN</span>
+                     <span class="text-[10px] font-extrabold text-gray-700 tracking-widest">SLIDER KORUPSI</span>
+                     <span class="text-[9px] font-extrabold text-red-600 tracking-wide">100% GILA CUAN</span>
+                  </div>
+                  <input id="cr-slider" type="range" min="0" max="100" value="10" class="ks" />
+                  <div class="text-center mt-2">
+                     <span id="cr-pct" class="mono font-black text-2xl" style="color: #22c55e; transition: color 0.2s">10%</span>
+                  </div>
+               </div>
+            </section>
+            <!-- Tab Content -->
+            <section id="tab-content" class="min-h-[200px]"></section>
+         </main>
+
+         <!-- Nav Bar -->
+         <nav id="nav-bar" class="flex-none px-1 pt-1.5 pb-2" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-top: 1px solid rgba(0, 0, 0, 0.06)">
+            <div class="flex" id="nav-btns">
+               <button class="tab-btn flex-1 flex flex-col items-center gap-0.5 py-1.5 rounded-xl cursor-pointer text-white" data-tab="0" style="background: linear-gradient(180deg, #1f2937, #111827); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15)">
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                     <rect width="16" height="20" x="4" y="2" rx="2" />
+                     <path d="M9 22v-4h6v4" />
+                     <path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01" />
+                  </svg>
+                  <span class="text-[8px] font-bold tracking-wider">PROYEK</span>
+               </button>
+               <button class="tab-btn flex-1 flex flex-col items-center gap-0.5 py-1.5 rounded-xl cursor-pointer text-gray-400 hover:text-gray-600" data-tab="1">
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                     <path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z" />
+                     <path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a4.403 4.403 0 0 0 4.56-5.42z" />
+                  </svg>
+                  <span class="text-[8px] font-bold tracking-wider">CUCI UANG</span>
+               </button>
+               <button class="tab-btn flex-1 flex flex-col items-center gap-0.5 py-1.5 rounded-xl cursor-pointer text-gray-400 hover:text-gray-600" data-tab="2">
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                     <path d="M11 11.19V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-.19" />
+                     <path d="M16 3.19V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3.19" />
+                     <path d="M21 15.19V14a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-.19" />
+                     <path d="M15 22v-4a2 2 0 0 1 2-2h4" />
+                     <path d="M19 8a2 2 0 0 1 2 2v4" />
+                     <path d="M3 18a2 2 0 0 1 2-2h4" />
+                  </svg>
+                  <span class="text-[8px] font-bold tracking-wider">SUAP</span>
+               </button>
+               <button class="tab-btn flex-1 flex flex-col items-center gap-0.5 py-1.5 rounded-xl cursor-pointer text-gray-400 hover:text-gray-600 relative" data-tab="3">
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                     <circle cx="9" cy="7" r="4" />
+                     <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                     <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                  <span class="text-[8px] font-bold tracking-wider">KELUARGA</span>
+                  <div id="prest-dot" class="absolute -top-0.5 -right-1 w-2.5 h-2.5 rounded-full bg-purple-500 border-2 border-white hidden"></div>
+               </button>
+            </div>
+         </nav>
+      </div>
+
+      <!-- Toasts -->
+      <div id="toast-wrap" class="fixed top-3 left-1/2 z-[60] flex flex-col gap-1.5 pointer-events-none" style="transform: translateX(-50%); max-width: 400px; width: 92%"></div>
+
+      <!-- Game Over Modal -->
+      <div id="go-modal" class="fixed inset-0 z-50 flex items-center justify-center p-5 hidden" style="background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(6px)">
+         <div class="w-full max-w-sm rounded-3xl overflow-hidden pop-in" style="background: #f0ede6; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3)">
+            <div class="h-3" style="background: repeating-linear-gradient(90deg, #dc2626 0px, #dc2626 20px, #fbbf24 20px, #fbbf24 40px)"></div>
+            <div class="px-6 pt-5 pb-6">
+               <div class="flex justify-center mb-4">
+                  <div class="prisoner-sway flex flex-col items-center">
+                     <div class="relative">
+                        <div class="w-14 h-14 rounded-full bg-yellow-200 border-2 border-yellow-400 relative shadow-inner">
+                           <div class="absolute top-0 left-1 right-1 h-5 rounded-t-full bg-gray-800"></div>
+                           <div class="absolute top-5 left-3 w-2.5 h-2.5 rounded-full bg-white border border-gray-400 flex items-center justify-center">
+                              <div class="w-1.5 h-1.5 rounded-full bg-gray-800"></div>
+                           </div>
+                           <div class="absolute top-7 left-3 w-1 h-3 rounded-b-full bg-blue-400 opacity-60"></div>
+                           <div class="absolute top-5 right-3 w-2.5 h-2.5 rounded-full bg-white border border-gray-400 flex items-center justify-center">
+                              <div class="w-1.5 h-1.5 rounded-full bg-gray-800"></div>
+                           </div>
+                           <div class="absolute top-7 right-3 w-1 h-3 rounded-b-full bg-blue-400 opacity-60"></div>
+                           <svg class="absolute bottom-3 left-1/2 -translate-x-1/2" width="16" height="8" viewBox="0 0 16 8">
+                              <path d="M3 1 Q5 6 8 1 Q11 6 13 1" stroke="#92400e" stroke-width="1.2" fill="none" />
+                           </svg>
+                        </div>
+                     </div>
+                     <div class="w-16 h-16 rounded-t-lg mt-0.5 relative overflow-hidden border-t-2 border-orange-400" style="background: repeating-linear-gradient(180deg, #f97316 0px, #f97316 7px, #fff 7px, #fff 14px)">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                           <span class="mono font-black text-orange-800 text-xs bg-orange-200/80 px-1.5 py-0.5 rounded">KPK-001</span>
+                        </div>
+                     </div>
+                     <div class="flex gap-1 -mt-1">
+                        <div class="w-6 h-8 rounded-b-lg bg-yellow-200 border border-yellow-400"></div>
+                        <div class="w-6 h-8 rounded-b-lg bg-yellow-200 border border-yellow-400"></div>
+                     </div>
+                     <div class="flex items-center gap-0.5 mt-1">
+                        <div class="w-2 h-2 rounded-full border border-gray-500 bg-gray-300"></div>
+                        <div class="w-2 h-2 rounded-full border border-gray-500 bg-gray-500"></div>
+                        <div class="w-2 h-2 rounded-full border border-gray-500 bg-gray-300"></div>
+                        <div class="w-2 h-2 rounded-full border border-gray-500 bg-gray-500"></div>
+                        <div class="w-2 h-2 rounded-full border border-gray-500 bg-gray-300"></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="text-center mb-5">
+                  <div class="flex items-center justify-center gap-2 mb-1">
+                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                        <path d="M12 9v4" />
+                        <path d="M12 17h.01" />
+                     </svg>
+                     <h2 class="text-xl font-extrabold text-red-700 tracking-tight">GAME OVER</h2>
+                  </div>
+                  <p class="text-sm font-bold text-red-600">ANDA TERTANGKAP KPK!</p>
+                  <p class="text-[11px] text-gray-500 mt-1 leading-relaxed">Heat meter mencapai 100%. Kasus korupsi mega proyek Anda akhirnya terbongkar.</p>
+               </div>
+               <div class="rounded-xl p-3 mb-4" style="background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.1)">
+                  <div class="grid grid-cols-2 gap-3 text-center">
+                     <div>
+                        <div class="text-[8px] font-bold text-red-400 uppercase tracking-wider">Uang Kotor Disita</div>
+                        <div id="go-dirty" class="mono font-bold text-sm text-red-600">Rp 0</div>
+                     </div>
+                     <div>
+                        <div class="text-[8px] font-bold text-red-400 uppercase tracking-wider">Sisa Uang Bersih</div>
+                        <div id="go-clean" class="mono font-bold text-sm text-red-600">Rp 0</div>
+                     </div>
+                  </div>
+               </div>
+               <div class="space-y-2.5">
+                  <button id="btn-lawyer" class="btn-up w-full py-3.5 rounded-xl font-bold text-sm cursor-pointer bg-gray-300 text-gray-500 cursor-not-allowed">
+                     <div class="flex items-center justify-center gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                           <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+                           <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+                           <path d="M7 21h10" />
+                           <path d="M12 3v18" />
+                           <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" />
+                        </svg>
+                        Sewa Pengacara Mahal
+                     </div>
+                     <div class="text-[10px] opacity-75 mt-0.5">Rp 5.0M — Kurangi 50% Heat</div>
+                  </button>
+                  <button id="btn-prison" class="btn-up w-full py-3.5 rounded-xl font-bold text-sm text-white cursor-pointer" style="background: linear-gradient(135deg, #1f2937, #111827)">
+                     <div class="flex items-center justify-center gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                           <circle cx="12" cy="10" r="8" />
+                           <path d="M10 18v2M14 18v2M8 18h8" />
+                           <circle cx="9" cy="10" r="1.3" fill="currentColor" stroke="none" />
+                           <circle cx="15" cy="10" r="1.3" fill="currentColor" stroke="none" />
+                           <path d="M10 14.5h4" />
+                        </svg>
+                        Pasrah Masuk Penjara
+                     </div>
+                     <div class="text-[10px] opacity-50 mt-0.5">Reset semua progress (prestise tetap)</div>
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <script>
+         /* ==================== IKON ==================== */
+         function ic(n, s = 20, c = "") {
+            const p = `width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"${c ? ` class="${c}"` : ""}`;
+            const m = {
+               cash: `<svg ${p}><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>`,
+               coin: `<svg ${p}><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>`,
+               flame: `<svg ${p}><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`,
+               siren: `<svg ${p}><path d="M6 18.5a3.5 3.5 0 0 0 7 0v-12a3.5 3.5 0 0 0-7 0v12Z"/><path d="M13 12h9M13 6.5h9M13 17.5h9"/></svg>`,
+               building: `<svg ${p}><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></svg>`,
+               arrowUp: `<svg ${p}><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>`,
+               droplets: `<svg ${p}><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a4.403 4.403 0 0 0 4.56-5.42z"/></svg>`,
+               handCoins: `<svg ${p}><path d="M11 11.19V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-.19"/><path d="M16 3.19V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3.19"/><path d="M21 15.19V14a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-.19"/><path d="M15 22v-4a2 2 0 0 1 2-2h4"/><path d="M19 8a2 2 0 0 1 2 2v4"/><path d="M3 18a2 2 0 0 1 2-2h4"/></svg>`,
+               users: `<svg ${p}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+               lock: `<svg ${p}><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>`,
+               alertTri: `<svg ${p}><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>`,
+               shield: `<svg ${p}><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>`,
+               skull: `<svg ${p}><circle cx="12" cy="10" r="8"/><path d="M10 18v2M14 18v2M8 18h8"/><circle cx="9" cy="10" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1.3" fill="currentColor" stroke="none"/><path d="M10 14.5h4"/></svg>`,
+               zap: `<svg ${p}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+               coffee: `<svg ${p}><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>`,
+               gamepad: `<svg ${p}><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="13" r="1" fill="currentColor" stroke="none"/><circle cx="18" cy="11" r="1" fill="currentColor" stroke="none"/><rect width="20" height="12" x="2" y="6" rx="2"/></svg>`,
+               bitcoin: `<svg ${p}><path d="M11.767 19.089c4.924.868 6.14-6.025 1.216-6.894m-1.216 6.894L5.86 18.047m5.908 1.042-.347 1.97m1.563-8.864c4.924.869 6.14-6.025 1.215-6.893m-1.215 6.893-3.94-.694m5.155-6.2L8.58 6.1m0 0L7.828 2l-2.236.394m2.988 3.706 1.563-8.864m-1.563 8.864 1.563-8.864"/></svg>`,
+               home: `<svg ${p}><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+               scale: `<svg ${p}><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>`,
+               gavel: `<svg ${p}><path d="m14.5 2.5-8 8"/><path d="m4.5 10.5 8-8"/><path d="M12 8 8 12"/><path d="m10 14 4-4"/><path d="m2 16 6 6"/><path d="M19 13c1.7 1.7 2.5 3.4 1.8 4.1-.7.7-2.4-.1-4.1-1.8"/></svg>`,
+               trendingUp: `<svg ${p}><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
+            };
+            return m[n] || "";
+         }
+
+         /* ==================== KONSTANTA ==================== */
+         const B = 500000,
+            W = 1.5,
+            T = 0.2;
+         const LAUNDRY_PER = 250000;
+         const UPG = 1.15;
+         const BASE_COST = { proj: 500000, laun: 750000, bribe: 600000 };
+         const PRESTIGE_REQ = 100000000;
+         const LAWYER_COST = 5000000;
+
+         /* ==================== STATE ==================== */
+         const S = { dirtyMoney: 0, cleanMoney: 1000000, heatMeter: 0, corruptionRate: 0.1, projectLevel: 1, laundryLevel: 0, bribeLevel: 0, prestigeCount: 0, gameOver: false };
+         let activeTab = 0;
+
+         /* ==================== UTILITAS ==================== */
+         const $ = (id) => document.getElementById(id);
+         function fmtRp(v) {
+            if (v < 0) return "-" + fmtRp(-v);
+            if (v >= 1e12) return "Rp " + (v / 1e12).toFixed(2) + "T";
+            if (v >= 1e9) return "Rp " + (v / 1e9).toFixed(2) + "B";
+            if (v >= 1e6) return "Rp " + (v / 1e6).toFixed(1) + "M";
+            if (v >= 1e3) return "Rp " + (v / 1e3).toFixed(0) + "K";
+            return "Rp " + Math.floor(v).toLocaleString("id-ID");
+         }
+         function fmtShort(v) {
+            if (v >= 1e9) return (v / 1e9).toFixed(2) + "B";
+            if (v >= 1e6) return (v / 1e6).toFixed(1) + "M";
+            if (v >= 1e3) return (v / 1e3).toFixed(0) + "K";
+            return Math.floor(v).toLocaleString("id-ID");
+         }
+
+         /* ==================== PERHITUNGAN ==================== */
+         function getPrestMult() {
+            return 1 + S.prestigeCount * 0.25;
+         }
+         function getIncome() {
+            return B * Math.pow(S.projectLevel, 1.15) * S.corruptionRate * getPrestMult();
+         }
+         function getHeatDelta() {
+            return Math.pow(S.corruptionRate / T, 3) * W - S.bribeLevel * 0.5;
+         }
+         function getLaundryRate() {
+            return S.laundryLevel * LAUNDRY_PER;
+         }
+         function getCost(type) {
+            return BASE_COST[type] * Math.pow(UPG, S[type + "Level"] || S[type === "proj" ? "projectLevel" : type === "laun" ? "laundryLevel" : "bribeLevel"]);
+         }
+         function getProjCost() {
+            return BASE_COST.proj * Math.pow(UPG, S.projectLevel);
+         }
+         function getLaunCost() {
+            return BASE_COST.laun * Math.pow(UPG, S.laundryLevel);
+         }
+         function getBribeCost() {
+            return BASE_COST.bribe * Math.pow(UPG, S.bribeLevel);
+         }
+
+         /* ==================== GAUGE ==================== */
+         const ticks = [],
+            labels = [];
+         function initGauge() {
+            const svg = $("gauge-svg"),
+               cx = 70,
+               cy = 62,
+               r = 50;
+            const ns = "http://www.w3.org/2000/svg";
+            for (let i = 0; i <= 20; i++) {
+               const a = Math.PI * (1 - i / 20),
+                  maj = i % 5 === 0;
+               const ir = r + (maj ? 5 : 6),
+                  or = r + (maj ? 13 : 10);
+               const ln = document.createElementNS(ns, "line");
+               ln.setAttribute("x1", cx + ir * Math.cos(a));
+               ln.setAttribute("y1", cy - ir * Math.sin(a));
+               ln.setAttribute("x2", cx + or * Math.cos(a));
+               ln.setAttribute("y2", cy - or * Math.sin(a));
+               ln.setAttribute("stroke", "#d4d0c6");
+               ln.setAttribute("stroke-width", maj ? 2.2 : 1);
+               ln.setAttribute("stroke-linecap", "round");
+               svg.insertBefore(ln, $("gauge-arc"));
+               ticks.push({
+                  el: ln,
+               });
+            }
+            [0, 50, 100].forEach((lv) => {
+               const a = Math.PI * (1 - lv / 100),
+                  lr = r + 22;
+               const tx = document.createElementNS(ns, "text");
+               tx.setAttribute("x", cx + lr * Math.cos(a));
+               tx.setAttribute("y", cy - lr * Math.sin(a) + 3);
+               tx.setAttribute("text-anchor", "middle");
+               tx.setAttribute("font-size", "7");
+               tx.setAttribute("font-weight", "700");
+               tx.setAttribute("fill", "#999");
+               tx.textContent = lv;
+               svg.insertBefore(tx, $("gauge-arc"));
+               labels.push(tx);
+            });
+         }
+         function heatColor(v) {
+            if (v > 80) return "#dc2626";
+            if (v > 65) return "#ef4444";
+            if (v > 45) return "#f97316";
+            if (v > 25) return "#eab308";
+            if (v > 15) return "#84cc16";
+            return "#22c55e";
+         }
+         function updateGauge() {
+            const v = Math.min(100, Math.max(0, S.heatMeter));
+            const cx = 70,
+               cy = 62,
+               r = 50;
+            const ang = Math.PI * (1 - v / 100);
+            const ex = cx + r * Math.cos(ang),
+               ey = cy - r * Math.sin(ang);
+            const big = v > 50 ? 1 : 0;
+            const col = heatColor(v);
+            $("gauge-arc").setAttribute("d", v > 0.3 ? `M ${cx - r} ${cy} A ${r} ${r} 0 ${big} 1 ${ex.toFixed(2)} ${ey.toFixed(2)}` : "");
+            $("gauge-arc").setAttribute("stroke", col);
+            $("gauge-pct").textContent = Math.round(v) + "%";
+            $("gauge-pct").setAttribute("fill", col);
+            const svg = $("gauge-svg");
+            svg.style.filter = v > 80 ? "drop-shadow(0 0 8px " + col + ")" : "none";
+            ticks.forEach((t, i) => {
+               t.el.setAttribute("stroke", i / 20 <= v / 100 ? col : "#d4d0c6");
+            });
+            labels.forEach((l, i) => {
+               const lv = [0, 50, 100][i];
+               l.setAttribute("fill", lv / 100 <= v / 100 ? col : "#999");
+            });
+            const sir = $("gauge-siren");
+            if (v > 70) {
+               sir.classList.remove("hidden");
+               sir.innerHTML = ic("siren", 20, "text-red-500 siren-glow");
+            } else {
+               sir.classList.add("hidden");
+            }
+            /* Status bar background */
+            const sb = $("status-bar");
+            if (v > 70) {
+               sb.classList.add("pulse-ring");
+               sb.style.background = "rgba(239,68,68,.06)";
+            } else {
+               sb.classList.remove("pulse-ring");
+               sb.style.background = "transparent";
+            }
+         }
+
+         /* ==================== JEMBATAN ==================== */
+         function renderBridge() {
+            const cr = S.corruptionRate,
+               danger = cr >= 0.75,
+               warn = cr >= 0.5 && cr < 0.75,
+               safe = cr <= 0.2;
+            const dc = danger ? "#dc2626" : warn ? "#f97316" : safe ? "#22c55e" : "#9ca3af";
+            const cc = danger ? "#991b1b" : warn ? "#9a3412" : "#6b7280";
+            let cracks = "";
+            if (danger) for (let i = 0; i < 4; i++) cracks += `<line class="crack-anim" x1="${40 + i * 50}" y1="28" x2="${48 + i * 50}" y2="36" stroke="#7f1d1d" stroke-width="1.5" stroke-linecap="round" style="animation-delay:${i * 0.15}s;opacity:.7"/>`;
+            let ws = warn ? '<rect x="10" y="24" width="200" height="4" rx="2" fill="repeating-linear-gradient(90deg,#f97316 0px,#f97316 8px,#fbbf24 8px,#fbbf24 16px)" opacity=".6"/>' : "";
+            let badge = "";
+            if (safe) badge = '<rect x="82" y="0" width="56" height="16" rx="8" fill="#22c55e"/><text x="110" y="11.5" text-anchor="middle" font-size="8" font-weight="800" fill="#fff">AMAN</text>';
+            else if (danger) badge = `<g class="crack-anim"><rect x="68" y="0" width="84" height="16" rx="8" fill="#dc2626"/><text x="110" y="11.5" text-anchor="middle" font-size="7.5" font-weight="800" fill="#fff">GILA CUAN !!</text></g>`;
+            else if (warn) badge = '<rect x="74" y="0" width="72" height="16" rx="8" fill="#f97316"/><text x="110" y="11.5" text-anchor="middle" font-size="7.5" font-weight="800" fill="#fff">WASPADAI !</text>';
+            let vcab = "";
+            [50, 80, 110, 140, 170].forEach((x) => {
+               const yo = Math.abs(x - 110) * 0.07;
+               vcab += `<line x1="${x}" y1="${6 + yo}" x2="${x}" y2="26" stroke="${cc}" stroke-width=".8" opacity=".4"/>`;
+            });
+            $("bridge-wrap").innerHTML = `<svg viewBox="0 0 220 52" class="w-full">
+    <rect x="18" y="8" width="6" height="40" rx="1" fill="#78716c"/><rect x="14" y="6" width="14" height="5" rx="1" fill="#57534e"/>
+    <rect x="196" y="8" width="6" height="40" rx="1" fill="#78716c"/><rect x="192" y="6" width="14" height="5" rx="1" fill="#57534e"/>
+    <path d="M24 8 Q70 2 110 14 Q150 2 196 8" fill="none" stroke="${cc}" stroke-width="1.5"/>
+    <path d="M24 8 Q70 16 110 14 Q150 16 196 8" fill="none" stroke="${cc}" stroke-width="1.5" opacity=".5"/>
+    ${vcab}
+    <rect x="10" y="24" width="200" height="8" rx="2" fill="${dc}" opacity=".85"/>
+    ${ws}
+    <line x1="20" y1="28" x2="200" y2="28" stroke="#fff" stroke-width="1" stroke-dasharray="6 4" opacity=".5"/>
+    ${cracks}
+    <rect x="106" y="32" width="8" height="16" rx="1" fill="#78716c"/>
+    <path d="M0 44 Q30 40 55 44 Q80 48 110 44 Q140 40 165 44 Q190 48 220 44 V52 H0Z" fill="#93c5fd" opacity=".25"/>
+    <path d="M0 47 Q40 43 80 47 Q120 51 160 47 Q200 43 220 47 V52 H0Z" fill="#60a5fa" opacity=".15"/>
+    ${badge}</svg>`;
+         }
+
+         /* ==================== TAB RENDER ==================== */
+         const fronts = [
+            { name: 'Kedai Kopi "Ngarok Sana"', icon: "coffee", lvl: 1 },
+            { name: 'Tim E-Sports "GG Wash"', icon: "gamepad", lvl: 3 },
+            { name: 'Kripto "ScamCoin Pro"', icon: "bitcoin", lvl: 5 },
+            { name: 'Properti "Rumah Hantu"', icon: "home", lvl: 8 },
+            { name: 'Travel "Haji Fiktif"', icon: "trendingUp", lvl: 12 },
+         ];
+         const bribeTgts = [
+            { name: "Auditor BPK Junior", icon: "scale", lvl: 1 },
+            { name: "Jaksa Kejaksaan", icon: "gavel", lvl: 3 },
+            { name: "Kapolres Daerah", icon: "shield", lvl: 5 },
+            { name: "Hakim Pengadilan", icon: "scale", lvl: 8 },
+            { name: "Ketua KPK (Ironi)", icon: "skull", lvl: 12 },
+         ];
+         function cardStyle() {
+            return "background:rgba(255,255,255,.72);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.05);box-shadow:0 2px 12px rgba(0,0,0,.04)";
+         }
+
+         function renderTabProj() {
+            const cost = getProjCost(),
+               can = S.cleanMoney >= cost,
+               inc = getIncome(),
+               mult = Math.pow(S.projectLevel, 1.15);
+            return `<div class="rounded-2xl p-4 slide-up" style="${cardStyle()}">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#374151,#1f2937)">${ic("building", 22, "text-gray-200")}</div>
+      <div><div class="text-sm font-extrabold text-gray-900">MANDOR PROYEK</div><div class="text-[10px] text-gray-500">Tingkatkan mark-up kontraktor</div></div>
+    </div>
+    <div class="grid grid-cols-3 gap-2 mb-4">
+      <div class="bg-gray-50 rounded-xl p-2.5 text-center"><div class="text-[8px] font-bold text-gray-400 uppercase tracking-wider">Level</div><div class="mono font-extrabold text-xl text-gray-800">${S.projectLevel}</div></div>
+      <div class="bg-gray-50 rounded-xl p-2.5 text-center"><div class="text-[8px] font-bold text-gray-400 uppercase tracking-wider">Income</div><div class="mono font-extrabold text-sm text-gray-800 mt-0.5">${fmtShort(inc)}</div></div>
+      <div class="bg-gray-50 rounded-xl p-2.5 text-center"><div class="text-[8px] font-bold text-gray-400 uppercase tracking-wider">Mult</div><div class="mono font-extrabold text-sm text-gray-800 mt-0.5">${mult.toFixed(2)}x</div></div>
+    </div>
+    <div class="bg-amber-50 rounded-lg px-3 py-2 mb-3 flex items-start gap-2">${ic("flame", 14, "text-amber-500 mt-0.5 flex-shrink-0")}<p class="text-[10px] text-amber-700 leading-relaxed">Setiap level meningkatkan pendapatan ~15% (exponential 1.15x). Semakin tinggi level, semakin cepat kaya!</p></div>
+    <button data-act="up-proj" class="btn-up w-full py-3.5 rounded-xl font-bold text-sm cursor-pointer ${can ? "text-white" : "bg-gray-200 text-gray-400 cursor-not-allowed"}" ${can ? "" : "disabled"} style="${can ? "background:linear-gradient(135deg,#1f2937,#374151)" : ""}">
+      <div class="flex items-center justify-center gap-2">${ic("arrowUp", 16)} NAIKKAN LEVEL (+15% Pendapatan)</div>
+      <div class="mono text-[11px] mt-1 opacity-70">${fmtRp(cost)}</div>
+    </button></div>`;
+         }
+         function renderTabLaun() {
+            const cost = getLaunCost(),
+               can = S.cleanMoney >= cost,
+               lr = getLaundryRate();
+            let bizHTML = fronts
+               .map((f) => {
+                  const ok = S.laundryLevel >= f.lvl;
+                  return `<div class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs ${ok ? "bg-blue-50" : "bg-gray-50"}">
+      <div class="w-7 h-7 rounded-lg flex items-center justify-center ${ok ? "bg-blue-100" : "bg-gray-100"}">${ic(ok ? f.icon : "lock", 14, ok ? "text-blue-600" : "text-gray-400")}</div>
+      <div class="flex-1 min-w-0"><div class="font-semibold truncate ${ok ? "text-blue-800" : "text-gray-400 line-through"}">${f.name}</div><div class="text-[9px] text-gray-400">Buka di Level ${f.lvl}</div></div>
+      ${ok ? '<span class="mono text-[10px] font-bold text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">AKTIF</span>' : ""}</div>`;
+               })
+               .join("");
+            return `<div class="rounded-2xl p-4 slide-up" style="${cardStyle()}">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center bg-blue-600">${ic("droplets", 22, "text-blue-100")}</div>
+      <div><div class="text-sm font-extrabold text-gray-900">MESIN CUCI UANG</div><div class="text-[10px] text-gray-500">Ubah uang kotor jadi bersih otomatis</div></div>
+    </div>
+    <div class="grid grid-cols-2 gap-2 mb-4">
+      <div class="bg-blue-50 rounded-xl p-2.5 text-center"><div class="text-[8px] font-bold text-blue-400 uppercase tracking-wider">Level</div><div class="mono font-extrabold text-xl text-blue-700">${S.laundryLevel}</div></div>
+      <div class="bg-blue-50 rounded-xl p-2.5 text-center"><div class="text-[8px] font-bold text-blue-400 uppercase tracking-wider">Rate Cuci</div><div class="mono font-extrabold text-sm text-blue-700 mt-0.5">${fmtShort(lr)}/dtk</div></div>
+    </div>
+    <div class="mb-4"><div class="text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-2">Perusahaan Depan (Front Business)</div><div class="space-y-1.5">${bizHTML}</div></div>
+    <button data-act="up-laun" class="btn-up w-full py-3.5 rounded-xl font-bold text-sm cursor-pointer ${can ? "bg-blue-600 text-white hover:bg-blue-500" : "bg-gray-200 text-gray-400 cursor-not-allowed"}" ${can ? "" : "disabled"}>
+      <div class="flex items-center justify-center gap-2">${ic("droplets", 16)} BELI MESIN CUCI BARU</div>
+      <div class="mono text-[11px] mt-1 opacity-70">${fmtRp(cost)}</div>
+    </button></div>`;
+         }
+         function renderTabBribe() {
+            const cost = getBribeCost(),
+               can = S.cleanMoney >= cost,
+               red = S.bribeLevel * 0.5;
+            let tgtHTML = bribeTgts
+               .map((t) => {
+                  const ok = S.bribeLevel >= t.lvl;
+                  return `<div class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs ${ok ? "bg-amber-50" : "bg-gray-50"}">
+      <div class="w-7 h-7 rounded-lg flex items-center justify-center ${ok ? "bg-amber-100" : "bg-gray-100"}">${ic(ok ? t.icon : "lock", 14, ok ? "text-amber-600" : "text-gray-400")}</div>
+      <div class="flex-1 min-w-0"><div class="font-semibold truncate ${ok ? "text-amber-800" : "text-gray-400 line-through"}">${t.name}</div><div class="text-[9px] text-gray-400">Buka di Level ${t.lvl}</div></div>
+      ${ok ? '<span class="mono text-[10px] font-bold text-amber-600 bg-amber-100 px-2 py-0.5 rounded-full">DIBORONG</span>' : ""}</div>`;
+               })
+               .join("");
+            return `<div class="rounded-2xl p-4 slide-up" style="${cardStyle()}">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center bg-amber-500">${ic("handCoins", 22, "text-amber-100")}</div>
+      <div><div class="text-sm font-extrabold text-gray-900">JARINGAN SUAP</div><div class="text-[10px] text-gray-500">Beli perlindungan hukum & keamanan</div></div>
+    </div>
+    <div class="grid grid-cols-2 gap-2 mb-4">
+      <div class="bg-amber-50 rounded-xl p-2.5 text-center"><div class="text-[8px] font-bold text-amber-500 uppercase tracking-wider">Level</div><div class="mono font-extrabold text-xl text-amber-700">${S.bribeLevel}</div></div>
+      <div class="bg-amber-50 rounded-xl p-2.5 text-center"><div class="text-[8px] font-bold text-amber-500 uppercase tracking-wider">Reduksi Heat</div><div class="mono font-extrabold text-sm text-amber-700 mt-0.5">-${red.toFixed(1)}/dtk</div></div>
+    </div>
+    <div class="mb-4"><div class="text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-2">Target Suap</div><div class="space-y-1.5">${tgtHTML}</div></div>
+    <div class="bg-green-50 rounded-lg px-3 py-2 mb-3 flex items-start gap-2">${ic("shield", 14, "text-green-600 mt-0.5 flex-shrink-0")}<p class="text-[10px] text-green-700 leading-relaxed">Setiap level mengurangi heat sebesar -0.5/dtk. Cukup tinggi untuk menetralisir korupsi ringan!</p></div>
+    <button data-act="up-bribe" class="btn-up w-full py-3.5 rounded-xl font-bold text-sm cursor-pointer ${can ? "bg-amber-500 text-white hover:bg-amber-400" : "bg-gray-200 text-gray-400 cursor-not-allowed"}" ${can ? "" : "disabled"}>
+      <div class="flex items-center justify-center gap-2">${ic("handCoins", 16)} SOGOK LAGI</div>
+      <div class="mono text-[11px] mt-1 opacity-70">${fmtRp(cost)}</div>
+    </button></div>`;
+         }
+         function renderTabPrest() {
+            const can = S.cleanMoney >= PRESTIGE_REQ;
+            if (!can) {
+               const pct = Math.min(100, (S.cleanMoney / PRESTIGE_REQ) * 100);
+               return `<div class="rounded-2xl p-4 slide-up" style="${cardStyle()}">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center bg-gray-200">${ic("lock", 22, "text-gray-400")}</div>
+        <div><div class="text-sm font-extrabold text-gray-900">WARISAN KELUARGA</div><div class="text-[10px] text-gray-500">Fitur terkunci</div></div>
+      </div>
+      <div class="text-center py-6">
+        <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">${ic("users", 36, "text-gray-300")}</div>
+        <p class="text-xs text-gray-500 mb-4 leading-relaxed">Kumpulkan Uang Bersih minimal <span class="mono font-bold text-gray-700">${fmtRp(PRESTIGE_REQ)}</span> untuk membuka fitur Warisan ke Anak.</p>
+        <div class="mono font-bold text-sm text-gray-700 mb-2">${fmtRp(S.cleanMoney)}</div>
+        <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden relative">
+          <div class="h-full rounded-full transition-all duration-300" style="width:${pct}%;background:linear-gradient(90deg,#a78bfa,#7c3aed)"></div>
+          <div class="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-white mix-blend-difference">${pct.toFixed(1)}%</div>
+        </div>
+        <div class="flex justify-between mt-1"><span class="mono text-[9px] text-gray-400">0</span><span class="mono text-[9px] text-gray-400">${fmtRp(PRESTIGE_REQ)}</span></div>
+      </div>
+      <div class="bg-purple-50 rounded-lg px-3 py-2 flex items-start gap-2">${ic("zap", 14, "text-purple-500 mt-0.5 flex-shrink-0")}<p class="text-[10px] text-purple-700 leading-relaxed">Prestige akan reset semua progress, namun memberikan bonus +25% pendapatan permanen per generasi.</p></div>
+    </div>`;
+            }
+            const nextB = (S.prestigeCount + 1) * 25;
+            return `<div class="rounded-2xl p-4 slide-up" style="${cardStyle()}">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">${ic("users", 22, "text-purple-100")}</div>
+      <div><div class="text-sm font-extrabold text-gray-900">WARISAN KE ANAK</div><div class="text-[10px] font-bold text-purple-600">SIAP DIAKTIFKAN</div></div>
+    </div>
+    <div class="rounded-xl p-4 mb-4 text-center" style="background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(168,85,247,.08))">
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div><div class="text-[8px] font-bold text-purple-400 uppercase tracking-wider">Prestige Ke</div><div class="mono font-extrabold text-2xl text-purple-700">${S.prestigeCount + 1}</div></div>
+        <div><div class="text-[8px] font-bold text-purple-400 uppercase tracking-wider">Total Bonus</div><div class="mono font-extrabold text-2xl text-purple-700">+${nextB}%</div></div>
+      </div>
+      <p class="text-[10px] text-purple-600 leading-relaxed">Semua progress direset. Uang Bersih, Level, dll kembali ke awal. Tapi generasi berikutnya mendapat bonus permanen +${nextB}% pendapatan dari semua sumber.</p>
+    </div>
+    ${S.prestigeCount > 0 ? `<div class="bg-gray-50 rounded-lg px-3 py-2 mb-3 text-center"><span class="text-[10px] text-gray-500">Saat ini: </span><span class="mono text-[10px] font-bold text-purple-600">Gen.${S.prestigeCount} = +${S.prestigeCount * 25}% bonus</span></div>` : ""}
+    <button data-act="prestige" class="btn-up w-full py-3.5 rounded-xl font-bold text-sm text-white cursor-pointer" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">
+      <div class="flex items-center justify-center gap-2">${ic("zap", 16)} WARISKAN KE ANAK</div>
+    </button></div>`;
+         }
+         function renderTab() {
+            const fns = [renderTabProj, renderTabLaun, renderTabBribe, renderTabPrest];
+            $("tab-content").innerHTML = fns[activeTab]();
+         }
+
+         /* ==================== UI UPDATE (per tick) ==================== */
+         function updateUI() {
+            const inc = getIncome(),
+               dh = getHeatDelta(),
+               lr = getLaundryRate();
+            $("dirty-val").textContent = fmtRp(S.dirtyMoney);
+            $("dirty-rate").textContent = inc > 0 ? "+" + fmtShort(inc) + "/dtk" : "";
+            $("clean-val").textContent = fmtRp(S.cleanMoney);
+            $("clean-rate").textContent = lr > 0 ? "+" + fmtShort(lr) + "/dtk cuci" : "";
+            $("inc-val").textContent = "+" + fmtShort(inc);
+            $("dh-val").textContent = (dh >= 0 ? "+" : "") + dh.toFixed(2);
+            $("dh-val").style.color = dh > 0 ? "#dc2626" : "#16a34a";
+            $("dh-box").style.background = dh > 0 ? "rgba(239,68,68,.06)" : "rgba(22,163,74,.06)";
+            $("dh-label").style.color = dh > 0 ? "rgba(239,68,68,.45)" : "rgba(22,163,74,.45)";
+            $("proj-lvl-badge").textContent = S.projectLevel;
+            $("prest-info").textContent = S.prestigeCount > 0 ? " | Prestige +" + S.prestigeCount * 25 + "%" : "";
+            const cr = Math.round(S.corruptionRate * 100);
+            $("cr-pct").textContent = cr + "%";
+            $("cr-pct").style.color = cr <= 20 ? "#22c55e" : cr <= 50 ? "#eab308" : cr <= 75 ? "#f97316" : "#dc2626";
+            /* Prestige badge */
+            const pb = $("prest-badge");
+            if (S.prestigeCount > 0) {
+               pb.classList.remove("hidden");
+               pb.classList.add("flex");
+               pb.innerHTML = ic("zap", 11) + " GEN. " + S.prestigeCount;
+            } else {
+               pb.classList.add("hidden");
+               pb.classList.remove("flex");
+            }
+            /* Prestige dot */
+            const pd = $("prest-dot");
+            if (S.cleanMoney >= PRESTIGE_REQ) pd.classList.remove("hidden");
+            else pd.classList.add("hidden");
+            /* Project card shake */
+            const pc = $("proj-card");
+            if (S.corruptionRate >= 0.75) pc.classList.add("shake-it");
+            else pc.classList.remove("shake-it");
+            /* Gauge */
+            updateGauge();
+         }
+
+         /* ==================== TOAST ==================== */
+         let toastId = 0;
+         function toast(msg, type = "ok") {
+            const id = ++toastId;
+            const el = document.createElement("div");
+            el.className = `pointer-events-auto px-4 py-2.5 rounded-xl shadow-xl text-xs font-bold text-center toast-in ${type === "ok" ? "bg-emerald-700 text-white" : type === "warn" ? "bg-amber-600 text-white" : "bg-gray-900 text-white"}`;
+            el.style.cssText = "position:relative;left:0";
+            el.textContent = msg;
+            $("toast-wrap").appendChild(el);
+            setTimeout(() => {
+               el.classList.remove("toast-in");
+               el.classList.add("toast-out");
+            }, 2000);
+            setTimeout(() => {
+               if (el.parentNode) el.remove();
+            }, 2400);
+         }
+
+         /* ==================== FLOATING HEAT TEXT ==================== */
+         setInterval(() => {
+            const fw = $("float-wrap");
+            if (S.corruptionRate >= 0.75 && getHeatDelta() > 0 && !S.gameOver) {
+               fw.innerHTML = "";
+               const el = document.createElement("div");
+               el.className = "float-away absolute left-1/2 -translate-x-1/2 mono text-xs font-black text-red-500 whitespace-nowrap";
+               el.textContent = "+" + getHeatDelta().toFixed(1) + " Heat/dtk";
+               fw.appendChild(el);
+            } else {
+               fw.innerHTML = "";
+            }
+         }, 1500);
+
+         /* ==================== AKSI GAME ==================== */
+         function doUpProj() {
+            const c = getProjCost();
+            if (S.cleanMoney >= c) {
+               S.cleanMoney -= c;
+               S.projectLevel++;
+               toast("Mandor Proyek naik ke Lv." + S.projectLevel);
+               renderTab();
+               updateUI();
+            }
+         }
+         function doUpLaun() {
+            const c = getLaunCost();
+            if (S.cleanMoney >= c) {
+               S.cleanMoney -= c;
+               S.laundryLevel++;
+               toast("Mesin Cuci naik ke Lv." + S.laundryLevel);
+               renderTab();
+               updateUI();
+            }
+         }
+         function doUpBribe() {
+            const c = getBribeCost();
+            if (S.cleanMoney >= c) {
+               S.cleanMoney -= c;
+               S.bribeLevel++;
+               toast("Jaringan Suap naik ke Lv." + S.bribeLevel);
+               renderTab();
+               updateUI();
+            }
+         }
+         function doPrestige() {
+            if (S.cleanMoney >= PRESTIGE_REQ) {
+               S.prestigeCount++;
+               const pc = S.prestigeCount;
+               Object.assign(S, {
+                  dirtyMoney: 0,
+                  cleanMoney: 1000000,
+                  heatMeter: 0,
+                  corruptionRate: 0.1,
+                  projectLevel: 1,
+                  laundryLevel: 0,
+                  bribeLevel: 0,
+                  gameOver: false,
+                  prestigeCount: pc,
+               });
+               $("cr-slider").value = 10;
+               toast("Warisan diberikan! Bonus +" + pc * 25 + "% permanen!");
+               renderBridge();
+               renderTab();
+               updateUI();
+            }
+         }
+         function doLawyer() {
+            if (S.cleanMoney >= LAWYER_COST) {
+               S.cleanMoney -= LAWYER_COST;
+               S.heatMeter *= 0.5;
+               S.gameOver = false;
+               toast("Pengacara berhasil turunkan heat 50%!", "warn");
+               $("go-modal").classList.add("hidden");
+               updateUI();
+            }
+         }
+         function doPrison() {
+            const pc = S.prestigeCount;
+            Object.assign(S, {
+               dirtyMoney: 0,
+               cleanMoney: 1000000,
+               heatMeter: 0,
+               corruptionRate: 0.1,
+               projectLevel: 1,
+               laundryLevel: 0,
+               bribeLevel: 0,
+               gameOver: false,
+               prestigeCount: pc,
+            });
+            $("cr-slider").value = 10;
+            toast("Anda masuk penjara. Semua direset.", "warn");
+            $("go-modal").classList.add("hidden");
+            renderBridge();
+            renderTab();
+            updateUI();
+         }
+         function showGameOver() {
+            $("go-dirty").textContent = fmtRp(S.dirtyMoney);
+            $("go-clean").textContent = fmtRp(S.cleanMoney);
+            const btn = $("btn-lawyer");
+            if (S.cleanMoney >= LAWYER_COST) {
+               btn.disabled = false;
+               btn.className = "btn-up w-full py-3.5 rounded-xl font-bold text-sm cursor-pointer text-white";
+               btn.style.background = "linear-gradient(135deg,#d97706,#f59e0b)";
+            } else {
+               btn.disabled = true;
+               btn.className = "btn-up w-full py-3.5 rounded-xl font-bold text-sm cursor-not-allowed bg-gray-300 text-gray-500";
+               btn.style.background = "";
+            }
+            $("go-modal").classList.remove("hidden");
+         }
+
+         /* ==================== EVENT LISTENERS ==================== */
+         /* Slider */
+         $("cr-slider").addEventListener("input", function () {
+            S.corruptionRate = parseInt(this.value) / 100;
+            renderBridge();
+            updateUI();
+         });
+         /* Nav tabs */
+         $("nav-btns").addEventListener("click", function (e) {
+            const btn = e.target.closest("[data-tab]");
+            if (!btn) return;
+            activeTab = parseInt(btn.dataset.tab);
+            /* Update visual */
+            this.querySelectorAll(".tab-btn").forEach((b) => {
+               if (parseInt(b.dataset.tab) === activeTab) {
+                  b.className = "tab-btn flex-1 flex flex-col items-center gap-0.5 py-1.5 rounded-xl cursor-pointer text-white";
+                  b.style.background = "linear-gradient(180deg,#1f2937,#111827)";
+                  b.style.boxShadow = "0 2px 8px rgba(0,0,0,.15)";
+               } else {
+                  b.className = "tab-btn flex-1 flex flex-col items-center gap-0.5 py-1.5 rounded-xl cursor-pointer text-gray-400 hover:text-gray-600";
+                  b.style.background = "";
+                  b.style.boxShadow = "";
+               }
+            });
+            renderTab();
+         });
+         /* Tab content actions (event delegation) */
+         $("tab-content").addEventListener("click", function (e) {
+            const btn = e.target.closest("[data-act]");
+            if (!btn || btn.disabled) return;
+            const act = btn.dataset.act;
+            if (act === "up-proj") doUpProj();
+            else if (act === "up-laun") doUpLaun();
+            else if (act === "up-bribe") doUpBribe();
+            else if (act === "prestige") doPrestige();
+         });
+         /* Modal buttons */
+         $("btn-lawyer").addEventListener("click", doLawyer);
+         $("btn-prison").addEventListener("click", doPrison);
+
+         /* ==================== GAME LOOP ==================== */
+         let wasGameOver = false;
+         setInterval(() => {
+            if (S.gameOver) return;
+            const dt = 0.1;
+            const inc = getIncome();
+            const dh = getHeatDelta();
+            const lr = getLaundryRate();
+            S.dirtyMoney += inc * dt;
+            S.heatMeter += dh * dt;
+            if (S.heatMeter < 0) S.heatMeter = 0;
+            if (S.heatMeter > 100) {
+               S.heatMeter = 100;
+               S.gameOver = true;
+            }
+            if (S.dirtyMoney > 0 && lr > 0) {
+               const c = Math.min(lr * dt, S.dirtyMoney);
+               S.dirtyMoney -= c;
+               S.cleanMoney += c;
+            }
+            updateUI();
+            /* Cek game over baru */
+            if (S.gameOver && !wasGameOver) {
+               wasGameOver = true;
+               showGameOver();
+            }
+            if (!S.gameOver) wasGameOver = false;
+            /* Update tab content angka jika prestige tab aktif */
+            if (activeTab === 3 && !S.gameOver) {
+               const pctEl = $("tab-content").querySelector(".mix-blend-difference");
+               if (pctEl) {
+                  const p = Math.min(100, (S.cleanMoney / PRESTIGE_REQ) * 100);
+                  pctEl.textContent = p.toFixed(1) + "%";
+               }
+            }
+         }, 100);
+
+         /* ==================== INIT ==================== */
+         function init() {
+            initGauge();
+            renderBridge();
+            renderTab();
+            updateUI();
+         }
+         init();
+      </script>
+   </body>
+</html>

@@ -9,7 +9,7 @@ from tqdm.notebook import tqdm
 load_dotenv(override=True)
 groq = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
-MODEL = "openai/gpt-oss-20b"
+MODEL = "MiniMax-M2.7-highspeed"
 BATCHES_FOLDER = "batches"
 OUTPUT_FOLDER = "output"
 state = Path("batches.pkl")
